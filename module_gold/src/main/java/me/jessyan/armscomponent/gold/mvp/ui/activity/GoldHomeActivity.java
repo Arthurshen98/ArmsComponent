@@ -22,6 +22,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jess.arms.base.BaseActivity;
@@ -33,6 +35,8 @@ import com.paginate.Paginate;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.jessyan.armscomponent.commonsdk.core.RouterHub;
 import me.jessyan.armscomponent.gold.R;
 import me.jessyan.armscomponent.gold.R2;
@@ -54,6 +58,8 @@ import timber.log.Timber;
  */
 @Route(path = RouterHub.GOLD_HOMEACTIVITY)
 public class GoldHomeActivity extends BaseActivity<GoldHomePresenter> implements GoldHomeContract.View, SwipeRefreshLayout.OnRefreshListener {
+    @BindView(R2.id.tv_test)
+    TextView tv_test;
     @BindView(R2.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R2.id.swipeRefreshLayout)
@@ -185,5 +191,12 @@ public class GoldHomeActivity extends BaseActivity<GoldHomePresenter> implements
         DefaultAdapter.releaseAllHolder(mRecyclerView);//super.onDestroy()之后会unbind,所有view被置为null,所以必须在之前调用
         super.onDestroy();
         this.mPaginate = null;
+    }
+
+    int number = 0;
+
+    @OnClick(R2.id.tv_test)
+    public void onViewClicked(View view) {
+        tv_test.setText("你妹的：" + (number += 1));
     }
 }

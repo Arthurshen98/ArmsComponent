@@ -21,9 +21,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jess.arms.base.BaseActivity;
@@ -42,6 +44,7 @@ import me.jessyan.armscomponent.zhihu.di.component.DaggerDetailComponent;
 import me.jessyan.armscomponent.zhihu.mvp.contract.DetailContract;
 import me.jessyan.armscomponent.zhihu.mvp.model.entity.ZhihuDetailBean;
 import me.jessyan.armscomponent.zhihu.mvp.presenter.DetailPresenter;
+import me.jessyan.armscomponent.zhihu.mvp.ui.fragment.FragmentTestFragment;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -81,7 +84,18 @@ public class DetailActivity extends BaseActivity<DetailPresenter> implements Det
     public void initData(@Nullable Bundle savedInstanceState) {
         initWebView();
         loadTitle();
+        initMainMyFragment();
         mPresenter.requestDetailInfo(getIntent().getIntExtra(ZhihuConstants.DETAIL_ID, 0));
+    }
+
+    /**
+     * 我的
+     */
+    private void initMainMyFragment() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.fl_content, new FragmentTestFragment());
+        transaction.addToBackStack(null);
+        transaction.commitAllowingStateLoss();
     }
 
     @Override

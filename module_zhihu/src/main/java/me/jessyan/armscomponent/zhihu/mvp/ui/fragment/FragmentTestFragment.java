@@ -9,16 +9,21 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import me.jessyan.armscomponent.zhihu.R;
+import me.jessyan.armscomponent.zhihu.R2;
 import me.jessyan.armscomponent.zhihu.di.component.DaggerFragmentTestComponent;
 import me.jessyan.armscomponent.zhihu.mvp.contract.FragmentTestContract;
 import me.jessyan.armscomponent.zhihu.mvp.presenter.FragmentTestPresenter;
-
-import me.jessyan.armscomponent.zhihu.R;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -31,6 +36,9 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * =============================================
  */
 public class FragmentTestFragment extends BaseFragment<FragmentTestPresenter> implements FragmentTestContract.View {
+
+    @BindView(R2.id.tv_fragment_click)
+    TextView tvFragmentClick;
 
     public static FragmentTestFragment newInstance() {
         FragmentTestFragment fragment = new FragmentTestFragment();
@@ -56,6 +64,7 @@ public class FragmentTestFragment extends BaseFragment<FragmentTestPresenter> im
     public void initData(@Nullable Bundle savedInstanceState) {
 
     }
+
 
     /**
      * 通过此方法可以使 Fragment 能够与外界做一些交互和通信, 比如说外部的 Activity 想让自己持有的某个 Fragment 对象执行一些方法,
@@ -123,5 +132,10 @@ public class FragmentTestFragment extends BaseFragment<FragmentTestPresenter> im
     @Override
     public void killMyself() {
 
+    }
+
+    @OnClick(R2.id.tv_fragment_click)
+    public void onViewClicked() {
+        ArmsUtils.snackbarText("我已被点击了");
     }
 }
